@@ -11,7 +11,7 @@ public class Participant
 		if (this.energy < 0) this.energy = 0;
 	}
 
-	public void ApplyPenalty(int amount)
+	public virtual void ApplyPenalty(int amount)
 	{
 		if (amount < 0) return;
 		energy -= amount;

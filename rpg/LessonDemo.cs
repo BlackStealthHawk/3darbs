@@ -1,15 +1,20 @@
 using Godot;
+using System.Collections.Generic;
 
 public partial class LessonDemo : Node
 {
 	public override void _Ready()
 	{
-		Participant anna = new Participant("Anna", 100);
-		Participant janis = new Participant("Jānis", 80);
-		anna.ApplyPenalty(30);
-		GD.Print(anna.Name, ": ", anna.GetEnergy());
-		GD.Print(janis.Name, ": ", janis.GetEnergy());
-		anna.ApplyPenalty(100);
-		GD.Print("Anna: ", anna.GetEnergy(), ", aktīva: ", anna.IsActive());
+		List<Participant> party = new List<Participant>();
+		party.Add(new Participant("Ieva", 100));
+		party.Add(new Captain("Anna"));
+		party.Add(new Presenter("Jānis"));
+
+		foreach (Participant p in party)
+		{
+			int before = p.GetEnergy();
+			p.ApplyPenalty(20);
+			GD.Print(p.Name, ": ", before, " -> ", p.GetEnergy());
+		}
 	}
 }
