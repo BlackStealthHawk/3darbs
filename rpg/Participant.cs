@@ -1,21 +1,26 @@
-public class Participant
-{
-	public string Name;
-	public int Level = 1;
-	private int energy;
+using Godot;
+using System;
 
-	public Participant(string name, int energy)
+public partial class Participant : Node
+{
+	[Signal]
+	public delegate void FinishedEventHandler(string participantName);
+
+	public string ParticipantName = "Dalībnieks";
+	private int energy = 100;
+
+	public void Setup(string name, int initialEnergy)
 	{
-		Name = name;
-		this.energy = energy;
-		if (this.energy < 0) this.energy = 0;
+		ParticipantName = name;
+		energy = Math.Max(0, initialEnergy);
 	}
 
 	public virtual void ApplyPenalty(int amount)
 	{
-		if (amount < 0) return;
-		energy -= amount;
-		if (energy < 0) energy = 0;
+		if (!IsActive() || amount <= 0) return;
+		energy = Math.Max(0, energy - amount);
+		if (energy == 0)
+			EmitSignal(SignalName.Finished, ParticipantName);
 	}
 
 	public int GetEnergy()

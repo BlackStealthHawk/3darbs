@@ -1,6 +1,33 @@
 [gd_scene format=3 uid="uid://berehkfj7o3kv"]
 
-[ext_resource type="Script" uid="uid://bg47w0ewi6wsr" path="res://LessonDemo.cs" id="1_qk7x4"]
+[ext_resource type="Script" uid="uid://05ww5bnwf08i" path="res://Obstacle.cs" id="1_qk7x4"]
+
+[sub_resource type="CSharpScript" id="CSharpScript_63jxl"]
+script/source = "using Godot;
+using System.Collections.Generic;
+
+public partial class LessonDemo : Node
+{
+	public override void _Ready()
+	{
+		List<Participant> party = new List<Participant>();
+		party.Add(new Participant(\"Ieva\", 100));
+		party.Add(new Captain(\"Anna\"));
+		party.Add(new Presenter(\"Jānis\"));
+
+		foreach (Participant p in party)
+		{
+			int before = p.GetEnergy();
+			p.ApplyPenalty(20);
+			GD.Print(p.Name, \": \", before, \" -> \", p.GetEnergy());
+		}
+	}
+}
+"
 
 [node name="LessonDemo" type="Node2D" unique_id=1366440209]
+script = SubResource("CSharpScript_63jxl")
+
+[node name="Obstacle" type="Node" parent="." unique_id=1704310764]
 script = ExtResource("1_qk7x4")
+metadata/_custom_type_script = "uid://05ww5bnwf08i"
