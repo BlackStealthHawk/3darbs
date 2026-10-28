@@ -13,7 +13,7 @@ public partial class Obstacle : Node
 	public int Penalty
 	{
 		get { return penalty; }
-s		set { penalty = Math.Max(1, value); }
+		set { penalty = Math.Max(1, value); }
 	}
 
 	public override void _Ready()

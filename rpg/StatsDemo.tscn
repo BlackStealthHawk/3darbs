@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://baoisjkbldmss"]
+
+[ext_resource type="Script" uid="uid://b0n5laicvo42h" path="res://StatsDemo.cs" id="1_stats_demo"]
+[ext_resource type="Script" uid="uid://s6psiff1x4mb" path="res://Participant.cs" id="2_participant"]
+
+[node name="StatsDemo" type="Node2D" unique_id=1763357689]
+script = ExtResource("1_stats_demo")
+
+[node name="Anna" type="Node" parent="." unique_id=113101167]
+script = ExtResource("2_participant")

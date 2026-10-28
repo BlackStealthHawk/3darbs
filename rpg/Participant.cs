@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class Participant : Node
 {
@@ -7,29 +8,56 @@ public partial class Participant : Node
 	public delegate void FinishedEventHandler(string participantName);
 
 	public string ParticipantName = "Dalībnieks";
-	private int energy = 100;
+	private Stats stats = new Stats(100, 10);
+	private readonly List<Buff> buffs = new List<Buff>();
 
 	public void Setup(string name, int initialEnergy)
 	{
 		ParticipantName = name;
-		energy = Math.Max(0, initialEnergy);
+		stats.Energy = Math.Max(0, initialEnergy);
 	}
 
 	public virtual void ApplyPenalty(int amount)
 	{
 		if (!IsActive() || amount <= 0) return;
-		energy = Math.Max(0, energy - amount);
-		if (energy == 0)
+		stats.Energy = Math.Max(0, stats.Energy - amount);
+		if (stats.Energy == 0)
 			EmitSignal(SignalName.Finished, ParticipantName);
 	}
 
 	public int GetEnergy()
 	{
-		return energy;
+		return stats.Energy;
+	}
+
+	public Stats GetStats()
+	{
+		return stats;
+	}
+
+	public void Heal(int amount)
+	{
+		if (!IsActive()) return;
+		stats.Heal(amount);
 	}
 
 	public bool IsActive()
 	{
-		return energy > 0;
+		return stats.Energy > 0;
+	}
+
+	public void AddBuff(Buff buff)
+	{
+		buffs.Add(buff);
+	}
+
+	public int GetTotalFocus()
+	{
+		int total = stats.Focus;
+		foreach (Buff buff in buffs)
+		{
+			total += buff.FocusBonus;
+		}
+		return total;
 	}
 }
